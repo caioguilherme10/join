@@ -1,0 +1,38 @@
+import { DateTime } from 'luxon'
+import { beforeSave, BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+//import Hash from '@ioc:Adonis/Core/Hash'
+
+export default class Funcionario extends BaseModel {
+  @column({ isPrimary: true })
+  public cpf: string
+
+  @column()
+  public nome: string
+
+  @column()
+  public email: string
+
+  @column()
+  public avatar: string
+
+  @column()
+  public biografia: string
+
+  @column()
+  public password: string
+
+  @column.dateTime({ autoCreate: true })
+  public createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  public updatedAt: DateTime
+
+  /*
+  @beforeSave()
+  public static async hashPassword(funcionario: Funcionario) {
+    if (funcionario.$dirty.password) {
+      funcionario.password = await Hash.make(funcionario.password)
+    }
+  }
+  */
+}
