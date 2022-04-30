@@ -1,5 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Veiculo from 'App/Models/Veiculo'
+import Venda from 'App/Models/Venda'
+import Reserva from 'App/Models/Reserva'
 
 export default class VeiculosController {
 
@@ -49,6 +51,26 @@ export default class VeiculosController {
     await veiculo.delete()
     return {
       message: 'Veiculo excluído com sucesso!',
+    }
+  }
+
+  public async venda({ request, response }: HttpContextContract) {
+    const body = request.body()
+    const venda = await Venda.create(body)
+    response.status(201)
+    return {
+      message: 'Venda criada com sucesso!',
+      data: venda,
+    }
+  }
+
+  public async reserva({ request, response }: HttpContextContract) {
+    const body = request.body()
+    const reserva = await Reserva.create(body)
+    response.status(201)
+    return {
+      message: 'Reserva criada com sucesso!',
+      data: reserva,
     }
   }
 }

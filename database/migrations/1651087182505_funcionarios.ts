@@ -5,12 +5,13 @@ export default class Funcionarios extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.string('cpf')
-      table.string('nome')
-      table.string('email')
-      table.string('avatar')
+      table.string('cpf').primary()
+      table.string('nome').notNullable()
+      table.string('email').unique().notNullable()
+      table.string('avatar').notNullable()
       table.string('biografia')
-      table.string('password')
+      table.enu('tipo', ['administrador', 'vendedor']).notNullable()
+      table.string('password').notNullable()
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

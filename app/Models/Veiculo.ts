@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import Reserva from 'App/Models/Reserva'
+import Venda from 'App/Models/Venda'
 
 export default class Veiculo extends BaseModel {
   @column({ isPrimary: true })
@@ -22,6 +24,12 @@ export default class Veiculo extends BaseModel {
 
   @column()
   public precoCompra: number
+
+  @hasOne(() => Reserva)
+  public reserva: HasOne<typeof Reserva>
+
+  @hasOne(() => Venda)
+  public venda: HasOne<typeof Venda>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

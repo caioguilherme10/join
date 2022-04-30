@@ -1,17 +1,15 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Veiculos extends BaseSchema {
-  protected tableName = 'veiculos'
+export default class Reservas extends BaseSchema {
+  protected tableName = 'reservas'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id').primary()
-      table.string('marca').notNullable()
-      table.string('modelo').notNullable()
-      table.string('ano').notNullable()
-      table.integer('km').notNullable()
-      table.string('chassi').notNullable()
-      table.integer('precoCompra').notNullable()
+      table.date('dataReserva')
+      table.integer('valorReserva')
+      table.integer('veiculo_id').unsigned().references('veiculos.id')
+      table.string('cpf').unsigned().references('funcionarios.cpf')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
