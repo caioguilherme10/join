@@ -36,6 +36,7 @@ export default class FuncionariosController {
     funcionario.nome = body.nome
     funcionario.email = body.email
     funcionario.biografia = body.biografia
+    funcionario.tipo = body.tipo
     funcionario.password = body.password
     if (funcionario.avatar != body.avatar || !funcionario.avatar) {
       const image = request.file('avatar', this.validationImages)
@@ -51,15 +52,17 @@ export default class FuncionariosController {
       }
     }
     await funcionario.save()
-    response.status(204)
+    //response.status(204)
     return {
       message: 'Funcionario atualizado com sucesso!',
       data: funcionario,
     }
   }
 
-  public async index() {
-    const funcionarios = await Funcionario.query()
+  public async index({ request }) {
+    const page = request.input('page', 1)
+    const limit = 10
+    const funcionarios = await Funcionario.query().paginate(page, limit)
     return {
       data: funcionarios,
     }
@@ -75,7 +78,7 @@ export default class FuncionariosController {
   public async destroy({ params, request, response }: HttpContextContract) {
     const funcionario = await Funcionario.findOrFail(params.id)
     await funcionario.delete()
-    response.status(204)
+    //response.status(204)
     return {
       message: 'Funcionario excluído com sucesso!',
     }
@@ -85,6 +88,9 @@ export default class FuncionariosController {
     const email = request.input('email')
     const password = request.input('password')
     await auth.use('basic').verifyCredentials(email,password)
+    return {
+      auth: auth
+    }
   }
 
 }

@@ -25,10 +25,14 @@ export default class Veiculo extends BaseModel {
   @column()
   public precoCompra: number
 
-  @hasOne(() => Reserva)
+  @hasOne(() => Reserva, {
+    foreignKey: 'veiculo_id',
+  })
   public reserva: HasOne<typeof Reserva>
 
-  @hasOne(() => Venda)
+  @hasOne(() => Venda, {
+    foreignKey: 'veiculo_id',
+  })
   public venda: HasOne<typeof Venda>
 
   @column.dateTime({ autoCreate: true })

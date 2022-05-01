@@ -27,10 +27,14 @@ export default class Funcionario extends BaseModel {
   @column()
   public password: string
 
-  @hasMany(() => Reserva)
+  @hasMany(() => Reserva, {
+    foreignKey: 'cpf',
+  })
   public reservas: HasMany<typeof Reserva>
 
-  @hasMany(() => Venda)
+  @hasMany(() => Venda, {
+    foreignKey: 'cpf',
+  })
   public vendas: HasMany<typeof Venda>
 
   @column.dateTime({ autoCreate: true })
